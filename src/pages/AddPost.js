@@ -10,8 +10,8 @@ class AddPost extends React.Component {
 
   submit = () => {
     const { addPost, inputValues, navigation } = this.props;
-    addPost(inputValues);
-    navigation.navigate('Posts');
+    addPost([inputValues]);
+    navigation.navigate('AuthLoading');
     console.warn(this.props.inputValues)
   };
 
@@ -19,24 +19,26 @@ class AddPost extends React.Component {
     const { handleSubmit } = this.props;
     return (
       <View style={styles.container}>
-        <Text>
-          AddPost
+        <Text style={styles.title}>
+          ADD POST
         </Text>
-        <Text style={styles.text}>Add title of your post</Text>
         <Field
           name="title_post"
           component={RenderField}
+          label="Add title of your post"
         />
-        <Text style={styles.text}>Add your post</Text>
         <Field
           name="post"
           component={RenderField}
+          label="Add description of your post"
         />
-        <TouchableOpacity style={{ padding: 50 }} onPress={handleSubmit(this.submit)} >
-          <Text>
+        <View>
+        <TouchableOpacity style={styles.sendBtn} onPress={handleSubmit(this.submit)} >
+          <Text style={styles.btnText}>
             Send Post
           </Text>
         </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -59,6 +61,23 @@ export default reduxForm({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
     backgroundColor: '#aaa',
-  }
+    padding: 10,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 10,
+  },
+  sendBtn: {
+    marginTop: 55,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#000',
+  },
+  btnText: {
+    color: '#fff',
+  },
 })

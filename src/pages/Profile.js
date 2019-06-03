@@ -44,7 +44,7 @@ class Profile extends React.Component {
     const { navigation } = this.props;
     const { image } = this.state;
     return (
-      <View>
+      <View style={styles.wrap}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.buttonHeader} onPress={() => navigation.navigate('Posts')} >
             <Text>Go Back</Text>
@@ -88,15 +88,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
     padding: 10,
-    margin: 10
+    margin: 10,
+    borderRadius: 5,
+  },
+  wrap: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 50,
   },
   text: {
-    padding: 50,
-    textAlign: 'center',
+    marginBottom: 50,
   },
   image: {
     borderRadius: 90,
-    marginLeft: '25%',
     width: 180,
     height: 180,
   }

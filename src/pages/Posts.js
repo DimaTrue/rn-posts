@@ -28,7 +28,6 @@ class Posts extends React.Component {
 
   render() {
     const { posts } = this.props;
-    console.warn('POST', posts);
    // console.warn(this.state.active);
    if(this.props.loading) {
     return (
@@ -64,9 +63,9 @@ class Posts extends React.Component {
              (
               <FlatList
               style={styles.flatList}
-              data={posts}
+              data={posts? posts: []}
               //.filter(i => i.title.includes(this.state.filter.toLowerCase()))
-              keyExtractor={(item) => item.title}
+              keyExtractor={(item) => item.post}
               renderItem={({ item }) => <Post
                 // handle={() => this.selectFold(item.id)}
                 // active={item === this.state.active}
@@ -96,7 +95,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Posts);
 
 const styles = StyleSheet.create({
   header: {
-    //flex: 1,
     flexDirection: 'row',
     backgroundColor: '#aaa',
     alignItems: 'center',
@@ -106,7 +104,8 @@ const styles = StyleSheet.create({
   buttonHeader: {
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-    padding: 10
+    padding: 10,
+    borderRadius: 5,
   },
   container: {
     flex: 1,
@@ -122,14 +121,14 @@ const styles = StyleSheet.create({
   input: {
     padding: 10,
     marginLeft: '15%',
-    borderWidth: 3,
+    borderBottomWidth: 3,
     borderColor: 'grey',
     width: '70%',
   },
   inputFocused: {
     padding: 10,
     marginLeft: '15%',
-    borderWidth: 3,
+    borderBottomWidth: 3,
     borderColor: 'blue',
     width: '70%',
   }

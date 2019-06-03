@@ -13,7 +13,8 @@ export function* watchAddPost() {
 export function* getPosts() {
 	try {
 		const result = yield AsyncStorage.getItem('postsData');
-		yield put({ type: types.GET_POSTS_SUCCESS, payload: result, });
+		const parsedResult = yield JSON.parse(result);
+		yield put({ type: types.GET_POSTS_SUCCESS, payload: parsedResult, });
 	} catch (error) {
 		yield put({ type: types.GET_POSTS_FAILURE, payload: error });
 	}
@@ -21,8 +22,11 @@ export function* getPosts() {
 
 export function* addPost({ payload }) {
 	try {
+			//	yield AsyncStorage.removeItem('postsData');
 		const result = yield AsyncStorage.getItem('postsData');
-		yield AsyncStorage.setItem('postsData', `${payload}`);
+		 const parsedResult = yield JSON.parse(result);
+		 const totalPayload = yield parsedResult? payload.concat(parsedResult): payload;
+		 yield AsyncStorage.setItem('postsData', JSON.stringify(totalPayload));
 		yield put({ type: types.ADD_POST_SUCCESS, payload: payload });
 	} catch (error) {
 		yield put({ type: types.ADD_POST_FAILURE, payload: error });
