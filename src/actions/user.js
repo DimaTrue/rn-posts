@@ -1,9 +1,9 @@
-import { GET_TOKEN, REMOVE_TOKEN } from '../action-types/user';
+import { GET_USERDATA, REMOVE_USERDATA } from '../action-types/user';
 
-export const getToken = () => ({
-    type: GET_TOKEN,
+export const getUserData = () => ({
+    type: GET_USERDATA,
 });
 
-export const removeToken = () => ({
-    type: REMOVE_TOKEN,
+export const removeUserData = () => ({
+    type: REMOVE_USERDATA,
 });

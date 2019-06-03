@@ -1,4 +1,4 @@
-import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { put, takeEvery, all } from 'redux-saga/effects';
 import * as types from '../action-types/posts';
 import { AsyncStorage } from 'react-native';
 
@@ -22,11 +22,11 @@ export function* getPosts() {
 
 export function* addPost({ payload }) {
 	try {
-			//	yield AsyncStorage.removeItem('postsData');
+		//	yield AsyncStorage.removeItem('postsData');
 		const result = yield AsyncStorage.getItem('postsData');
-		 const parsedResult = yield JSON.parse(result);
-		 const totalPayload = yield parsedResult? payload.concat(parsedResult): payload;
-		 yield AsyncStorage.setItem('postsData', JSON.stringify(totalPayload));
+		const parsedResult = yield JSON.parse(result);
+		const totalPayload = yield parsedResult ? payload.concat(parsedResult) : payload;
+		yield AsyncStorage.setItem('postsData', JSON.stringify(totalPayload));
 		yield put({ type: types.ADD_POST_SUCCESS, payload: payload });
 	} catch (error) {
 		yield put({ type: types.ADD_POST_FAILURE, payload: error });

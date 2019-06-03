@@ -8,17 +8,25 @@ import { ADD_POST } from '../action-types/posts';
 
 class AddPost extends React.Component {
 
+  static navigationOptions = {
+    header: null,
+  };
+
   submit = () => {
     const { addPost, inputValues, navigation } = this.props;
     addPost([inputValues]);
     navigation.navigate('AuthLoading');
-    console.warn(this.props.inputValues)
   };
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <View style={styles.container}>
+         <TouchableOpacity style={styles.sendBtn} onPress={() => this.props.navigation.navigate('Posts')} >
+          <Text style={styles.btnText}>
+            Return
+          </Text>
+        </TouchableOpacity>
         <Text style={styles.title}>
           ADD POST
         </Text>

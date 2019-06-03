@@ -6,7 +6,7 @@ import {
 	View
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getToken } from '../actions/user';
+import { getUserData } from '../actions/user';
 
 
 class AuthLoading extends React.Component {
@@ -16,11 +16,11 @@ class AuthLoading extends React.Component {
 	};
 
 	async componentDidMount() {
-		await this.props.getToken();
+		await this.props.getUserData();
 	}
 
 	componentWillUpdate(nextProps) {
-		if (nextProps.token !== null) {
+		if (nextProps.userData !== null) {
 			this.props.navigation.navigate('App')
 		} else {
 			this.props.navigation.navigate('Auth')
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-	token: state.user.token,
+	userData: state.user.userData,
 });
 
 const mapDispatchToProps = dispatch => ({
-	getToken: () => dispatch(getToken()),
+	getUserData: () => dispatch(getUserData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthLoading);

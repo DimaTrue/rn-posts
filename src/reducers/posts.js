@@ -18,15 +18,6 @@ const reducer = (state = initialState, action) => {
 		case posts.GET_POSTS_FAILURE:
 			return { ...state, error: action.payload, loading: false, };
 
-		// case posts.REMOVE_POSTS:
-		// 	return { ...state, };
-
-		// case posts.REMOVE_POSTS_SUCCESS:
-		// 	return { ...state, posts: null };
-
-		// case posts.REMOVE_POSTS_FAILURE:
-		// 	return { ...state, error: action.payload };
-
 		case posts.ADD_POST:
 			return { ...state, };
 

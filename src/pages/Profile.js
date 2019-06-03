@@ -1,20 +1,45 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Alert, AsyncStorage } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image, Alert } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
 import noAvatar from '../../assets/add_photo.png';
 import { connect } from 'react-redux';
-import { removeToken } from '../actions/user';
+import { Field, reduxForm } from 'redux-form';
+import { validate } from '../utils/redux-form/validate';
+import { RenderField } from '../utils/redux-form/RenderField/RenderField';
+import { removeUserData } from '../actions/user';
+import { getProfileData, removeProfileData, getAvatar, removeAvatar } from '../actions/profile';
+import { SAVE_PROFILEDATA, SAVE_AVATAR } from '../action-types/profile';
+import Loading from '../components/Loading';
+
 
 class Profile extends React.Component {
 
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
-    image: null,
+    isEditing: false,
+  };
+
+  componentDidMount() {
+    const { getProfileData, getAvatar } = this.props;
+    getProfileData();
+    getAvatar();
+  }
+
+  submit = () => {
+    const { saveProfileData, inputValues } = this.props;
+    saveProfileData(inputValues);
+    this.setState({ isEditing: false });
   };
 
   logOut = () => {
-    const { removeToken, navigation } = this.props;
-    removeToken();
-    navigation.navigate('AuthLoading')
+    const { removeUserData, removeProfileData, removeAvatar, navigation } = this.props;
+    removeUserData();
+    removeProfileData();
+    removeAvatar();
+    navigation.navigate('AuthLoading');
   }
 
   takeFromCamera = async () => {
@@ -25,7 +50,7 @@ class Profile extends React.Component {
         aspect: [4, 3],
       });
       if (!result.cancelled) {
-        this.setState({ image: result.uri });
+        this.props.saveAvatar(result.uri);
       }
     }
   }
@@ -36,13 +61,13 @@ class Profile extends React.Component {
       aspect: [4, 3],
     });
     if (!result.cancelled) {
-      this.setState({ image: result.uri });
+      this.props.saveAvatar(result.uri);
     }
   }
 
   render() {
-    const { navigation } = this.props;
-    const { image } = this.state;
+    const { userData, navigation, handleSubmit, profileData, avatar, loading } = this.props;
+    const { isEditing } = this.state;
     return (
       <View style={styles.wrap}>
         <View style={styles.header}>
@@ -54,7 +79,8 @@ class Profile extends React.Component {
           </TouchableOpacity>
         </View>
         <Text style={styles.text}>Profile</Text>
-        <TouchableOpacity onPress={() => Alert.alert('Hello, User', 'Choose your destiny',
+        <TouchableOpacity onPress={() => Alert.alert(
+          `Hello, ${profileData && profileData.profileName ? profileData.profileName : ''}`, `Upload photo from:`,
           [
             { text: 'Camera', onPress: () => this.takeFromCamera() },
             { text: 'Gallery', onPress: () => this.takeFromGallery() },
@@ -62,19 +88,72 @@ class Profile extends React.Component {
         }>
           <Image
             style={styles.image}
-            source={image ? { uri: image } : noAvatar}
+            source={avatar ? { uri: avatar } : noAvatar}
           />
         </TouchableOpacity>
+        <View>
+          <Text>Login: {userData.username}</Text>
+        </View>
+        {isEditing ?
+          <View>
+            <View>
+              <Field
+                name="profileName"
+                component={RenderField}
+              />
+            </View>
+            <View>
+              <Field
+                name="profileLastName"
+                component={RenderField}
+              />
+            </View>
+            <TouchableOpacity onPress={handleSubmit(this.submit)}>
+              <Text>Save Changes</Text>
+            </TouchableOpacity>
+          </View> :
+          loading ?
+            <Loading /> :
+            <View>
+              <View>
+                <Text>First Name: {profileData && profileData.profileName ? profileData.profileName : 'unknown'}</Text>
+              </View>
+              <View>
+                <Text>Last Name: {profileData && profileData.profileLastName ? profileData.profileLastName : 'unknown'}</Text>
+              </View>
+              <TouchableOpacity onPress={() => this.setState({ isEditing: true })}>
+                <Text>Edit Profile</Text>
+              </TouchableOpacity>
+            </View>}
       </View >
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  removeToken: () => dispatch(removeToken()),
+const mapStateToProps = state => ({
+  userData: state.user.userData,
+  inputValues: state.form.profile ? state.form.profile.values : null,
+  profileData: state.profile && state.profile.profileData,
+  loading: state.profile && state.profile.loading,
+  avatar: state.profile && state.profile.avatar,
+  loadingAvatar: state.profile && state.profile.loadingAvatar,
 });
 
-export default connect(null, mapDispatchToProps)(Profile);
+const mapDispatchToProps = dispatch => ({
+  getProfileData: () => dispatch(getProfileData()),
+  saveProfileData: (inputValues) => dispatch({ type: SAVE_PROFILEDATA, payload: inputValues }),
+  removeUserData: () => dispatch(removeUserData()),
+  removeProfileData: () => dispatch(removeProfileData()),
+  getAvatar: () => dispatch(getAvatar()),
+  saveAvatar: (value) => dispatch({ type: SAVE_AVATAR, payload: value }),
+  removeAvatar: () => dispatch(removeAvatar()),
+});
+
+WrappedProfile = connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default reduxForm({
+  form: 'profile',
+  validate
+})(WrappedProfile);
 
 const styles = StyleSheet.create({
   header: {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { validate } from '../utils/redux-form/validate';
 import { RenderField } from '../utils/redux-form/RenderField/RenderField';
-import { SAVE_TOKEN } from '../action-types/user';
+import { SAVE_USERDATA } from '../action-types/user';
 
 
 class Login extends React.Component {
@@ -14,8 +14,8 @@ class Login extends React.Component {
   };
 
   submit = () => {
-    const { saveToken, inputValues, navigation } = this.props;
-    saveToken(inputValues);
+    const { saveUserData, inputValues, navigation } = this.props;
+    saveUserData(inputValues);
     navigation.navigate('AuthLoading');
   };
 
@@ -48,13 +48,6 @@ const styles = StyleSheet.create({
     padding: 50,
     textAlign: 'center',
   },
-  inputFocused: {
-    padding: 10,
-    marginLeft: '15%',
-    borderWidth: 3,
-    borderColor: 'blue',
-    width: '70%',
-  }
 })
 
 const mapStateToProps = state => ({
@@ -62,7 +55,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveToken: (inputValues) => dispatch({ type: SAVE_TOKEN, payload: inputValues }),
+  saveUserData: (inputValues) => dispatch({ type: SAVE_USERDATA, payload: inputValues }),
 });
 
 WrappedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
