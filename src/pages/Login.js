@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { validate } from '../utils/redux-form/validate';
 import { RenderField } from '../utils/redux-form/RenderField/RenderField';
 import { SAVE_USERDATA } from '../action-types/user';
+import pic from '../../assets/world.png';
 
 
 class Login extends React.Component {
@@ -22,22 +23,21 @@ class Login extends React.Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <View>
-        <Text style={styles.text}>Enter your login</Text>
+      <View style={styles.container}>
         <Field
           name="username"
           component={RenderField}
+          label="Enter your login"
         />
-        <Text style={styles.text}>Enter your password</Text>
         <Field
           name="password"
           component={RenderField}
+          label="Enter your password"
         />
-        <TouchableOpacity style={{ padding: 50 }} onPress={handleSubmit(this.submit)} >
-          <Text>
-            Log in
-          </Text>
+        <TouchableOpacity style={styles.btn} onPress={handleSubmit(this.submit)} >
+          <Text> Log in </Text>
         </TouchableOpacity>
+        <Image source={pic} />
       </View>
     );
   }
@@ -47,6 +47,17 @@ const styles = StyleSheet.create({
   text: {
     padding: 50,
     textAlign: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#bbb',
+    paddingTop: 50,
+  },
+  btn: {
+    marginTop: 50,
+    marginBottom: 50,
+    padding: 10,
   },
 })
 

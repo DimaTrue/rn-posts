@@ -27,15 +27,11 @@ class Posts extends React.Component {
         <>
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.buttonHeader} >
-              <Text>
-                Profile
-					</Text>
+              <Text> Profile </Text>
             </TouchableOpacity>
             <Text style={styles.text}>Posts</Text>
             <TouchableOpacity onPress={() => navigation.navigate('AddPost')} style={styles.buttonHeader} >
-              <Text>
-                Add Post
-					</Text>
+              <Text> Add Post	</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.container}>
@@ -76,6 +72,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-around',
     height: 75,
+    paddingTop: 15,
   },
   buttonHeader: {
     alignItems: 'center',

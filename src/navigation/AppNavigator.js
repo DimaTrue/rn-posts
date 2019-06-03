@@ -1,5 +1,4 @@
-import { Easing, Animated } from 'react-native';
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
@@ -51,64 +50,3 @@ export const MainStack = createStackNavigator( {
 );
 
 
-
-//export default createAppContainer(MainStack);
-
-// const MainStack = createStackNavigator(
-//   {
-//     Login: {
-//       screen: Login,
-//       navigationOptions: {
-//         gesturesEnabled: false,
-//       },
-//     },
-//     Profile: {
-//       screen: Profile,
-//       navigationOptions: {
-//         gesturesEnabled: false,
-//       },
-//     },
-//     Posts: {
-//       screen: Posts,
-//       navigationOptions: {
-//         gesturesEnabled: false,
-//       },
-//     },
-//     AddPost: {
-//       screen: AddPost,
-//       navigationOptions: {
-//         gesturesEnabled: false,
-//       },
-//     },
-//   },
-//   {
-//     headerMode: 'none',
-//     initialRouteName: 'Login',
-//     transitionConfig: () => ({
-//       mode: 'card',
-//       navigationOptions: params => ({
-//         gesturesEnabled: true,
-//         gesturesDirection: 'inverted',
-//       }),
-//       transitionSpec: {
-//         duration: 250,
-//         easing: Easing.out(Easing.poly(4)),
-//         timing: Animated.timing,
-//         useNativeDriver: true,
-//       },
-//       screenInterpolator: (sceneProps) => {
-//         const { layout, position, scene } = sceneProps;
-
-//         const thisSceneIndex = scene.index;
-//         const width = layout.initWidth;
-
-//         const translateX = position.interpolate({
-//           inputRange: [thisSceneIndex - 1, thisSceneIndex],
-//           outputRange: [width, 0],
-//         });
-
-//         return { transform: [{ translateX }] };
-//       },
-//     }),
-//   },
-// );

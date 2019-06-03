@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {
+  DotIndicator,
+} from 'react-native-indicators';
 
 const Loading = () => {
 	return (
 		<View style={styles.container}>
-			<Text>
-				Loading
-			</Text>
+			<DotIndicator color='#354e6d' />
 		</View>
 	);
 }
@@ -15,11 +16,8 @@ export default Loading;
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: 'row',
 		backgroundColor: '#aaa',
 		alignItems: 'center',
-		justifyContent: 'space-around',
-		height: 75,
-		fontSize: 70,
+		height: '100%',
 	},
 });

@@ -4,31 +4,32 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 
 const Post = (props) => {
   return (
-    <View style={styles.box}>
+    <View style={styles.wrap}>
+      <View style={styles.block}>
       <Image
         style={styles.img}
         source={{ uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png' }}
       />
       <Text style={styles.text} >{props.title}</Text>
-      <View>
-        <Text style={
-          styles.textBody
-        } >{props.body}</Text>
+      </View>
+      <View style={styles.body}>
+        <Text style={styles.textBody} >{props.body}</Text>
       </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  box: {
+  wrap: {
+    flex: 1,
     backgroundColor: '#333',
     padding: 10,
-    borderBottomColor: 'black',
-    borderBottomWidth: 2,
-    marginBottom: 30,
-    marginTop: 10,
+    margin: 5,
+  },
+  block: {
     flex: 1,
-    alignItems: 'center',
+    flexDirection: 'row',
+    padding: 5,
   },
   img: {
     width: 50,
@@ -42,12 +43,15 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff'
   },
-  textBody: {
-    fontSize: 25,
-    textAlign: 'center',
-    padding: 10,
+  body: {
     backgroundColor: '#fff',
     borderRadius: 10,
+    width: '100%',
+  },
+  textBody: {
+    fontSize: 15,
+    textAlign: 'center',
+    padding: 10,
   },
 });
 

@@ -21,33 +21,31 @@ class AddPost extends React.Component {
   render() {
     const { handleSubmit } = this.props;
     return (
-      <View style={styles.container}>
-         <TouchableOpacity style={styles.sendBtn} onPress={() => this.props.navigation.navigate('Posts')} >
-          <Text style={styles.btnText}>
-            Return
-          </Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>
-          ADD POST
-        </Text>
-        <Field
-          name="title_post"
-          component={RenderField}
-          label="Add title of your post"
-        />
-        <Field
-          name="post"
-          component={RenderField}
-          label="Add description of your post"
-        />
-        <View>
-        <TouchableOpacity style={styles.sendBtn} onPress={handleSubmit(this.submit)} >
-          <Text style={styles.btnText}>
-            Send Post
-          </Text>
-        </TouchableOpacity>
+      <>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.buttonHeader} onPress={() => this.props.navigation.navigate('Posts')} >
+            <Text>Return</Text>
+          </TouchableOpacity>
+          <Text style={styles.title}>Add Post</Text>
         </View>
-      </View>
+        <View style={styles.container}>
+          <Field
+            name="title_post"
+            component={RenderField}
+            label="Add title of your post"
+          />
+          <Field
+            name="post"
+            component={RenderField}
+            label="Add description of your post"
+          />
+          <View>
+            <TouchableOpacity style={styles.sendBtn} onPress={handleSubmit(this.submit)} >
+              <Text style={styles.btnText}> Send Post </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </>
     )
   }
 }
@@ -67,16 +65,32 @@ export default reduxForm({
 })(WrappedAddPost);
 
 const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    backgroundColor: '#aaa',
+    alignItems: 'center',
+    height: 75,
+    paddingTop: 15,
+  },
+  buttonHeader: {
+    alignItems: 'center',
+    backgroundColor: '#DDDDDD',
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#aaa',
+    backgroundColor: '#bbb',
     padding: 10,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 10,
+    fontSize: 25,
+    textAlign: 'center',
+    padding: 10,
+    color: '#fff',
+    marginLeft: 50,
   },
   sendBtn: {
     marginTop: 55,

@@ -74,58 +74,62 @@ class Profile extends React.Component {
           <TouchableOpacity style={styles.buttonHeader} onPress={() => navigation.navigate('Posts')} >
             <Text>Go Back</Text>
           </TouchableOpacity>
+          <Text style={styles.text}>Profile</Text>
           <TouchableOpacity style={styles.buttonHeader} onPress={this.logOut} >
             <Text>Log Out</Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.text}>Profile</Text>
-        <TouchableOpacity onPress={() => Alert.alert(
-          `Hello, ${profileData && profileData.profileName ? profileData.profileName : ''}`, `Upload photo from:`,
-          [
-            { text: 'Camera', onPress: () => this.takeFromCamera() },
-            { text: 'Gallery', onPress: () => this.takeFromGallery() },
-          ])
-        }>
-          <Image
-            style={styles.image}
-            source={avatar ? { uri: avatar } : noAvatar}
-          />
-        </TouchableOpacity>
-        <View>
-          <Text>Login: {userData.username}</Text>
-        </View>
-        {isEditing ?
+        <View style={styles.container}>
+          <TouchableOpacity onPress={() => Alert.alert(
+            `Hello, ${profileData && profileData.profileName ? profileData.profileName : ''}`, `Upload photo from:`,
+            [
+              { text: 'Camera', onPress: () => this.takeFromCamera() },
+              { text: 'Gallery', onPress: () => this.takeFromGallery() },
+            ])
+          }>
+            <Image
+              style={styles.image}
+              source={avatar ? { uri: avatar } : noAvatar}
+            />
+          </TouchableOpacity>
           <View>
-            <View>
-              <Field
-                name="profileName"
-                component={RenderField}
-              />
-            </View>
-            <View>
-              <Field
-                name="profileLastName"
-                component={RenderField}
-              />
-            </View>
-            <TouchableOpacity onPress={handleSubmit(this.submit)}>
-              <Text>Save Changes</Text>
-            </TouchableOpacity>
-          </View> :
-          loading ?
-            <Loading /> :
+            <Text style={styles.titles}>Login: <Text style={styles.boldText}>{userData.username}</Text></Text>
+          </View>
+          {isEditing ?
             <View>
               <View>
-                <Text>First Name: {profileData && profileData.profileName ? profileData.profileName : 'unknown'}</Text>
+                <Field
+                  name="profileName"
+                  component={RenderField}
+                  label="Change your name"
+                />
               </View>
               <View>
-                <Text>Last Name: {profileData && profileData.profileLastName ? profileData.profileLastName : 'unknown'}</Text>
+                <Field
+                  name="profileLastName"
+                  component={RenderField}
+                  label="Change your last name"
+                />
               </View>
-              <TouchableOpacity onPress={() => this.setState({ isEditing: true })}>
-                <Text>Edit Profile</Text>
+              <TouchableOpacity style={styles.btn} onPress={handleSubmit(this.submit)}>
+                <Text style={styles.saveBtn}>Save Changes</Text>
               </TouchableOpacity>
-            </View>}
-      </View >
+            </View> :
+            loading ?
+              <Loading /> :
+              <View>
+                <View>
+                  <Text style={styles.titles}>First Name: <Text style={styles.boldText}>{profileData && profileData.profileName ? profileData.profileName : 'unknown'}</Text></Text>
+                </View>
+                <View>
+                  <Text style={styles.titles}>Last Name: <Text style={styles.boldText}>{profileData && profileData.profileLastName ? profileData.profileLastName : 'unknown'}</Text></Text>
+                </View>
+                <TouchableOpacity style={styles.btn} onPress={() => this.setState({ isEditing: true })}>
+                  <Text style={styles.editBtn}>Edit Profile</Text>
+                </TouchableOpacity>
+              </View>}
+        </View>
+      </View>
     );
   }
 }
@@ -157,11 +161,13 @@ export default reduxForm({
 
 const styles = StyleSheet.create({
   header: {
-    display: 'flex',
     flexDirection: 'row',
+    backgroundColor: '#aaa',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    backgroundColor: 'grey',
+    justifyContent: 'space-between',
+    height: 75,
+    paddingTop: 15,
+    width: '100%',
   },
   buttonHeader: {
     alignItems: 'center',
@@ -173,14 +179,45 @@ const styles = StyleSheet.create({
   wrap: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 50,
   },
   text: {
-    marginBottom: 50,
+    fontSize: 25,
+    textAlign: 'center',
+    padding: 10,
+    color: '#fff'
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#bbb',
+    width: '100%',
   },
   image: {
     borderRadius: 90,
     width: 180,
     height: 180,
-  }
+    marginTop: 5,
+    marginBottom: 5,
+  },
+  titles: {
+    fontSize: 15,
+  },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  btn: {
+    marginTop: 30,
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: '#000',
+  },
+  editBtn: {
+    color: '#f4b342',
+    textAlign: 'center',
+  },
+  saveBtn: {
+    color: '#4da85e',
+    textAlign: 'center',
+  },
 })

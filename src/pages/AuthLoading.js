@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-	ActivityIndicator,
 	StatusBar,
-	StyleSheet,
 	View
 } from 'react-native';
 import { connect } from 'react-redux';
 import { getUserData } from '../actions/user';
+import Loading from '../components/Loading';
 
 
 class AuthLoading extends React.Component {
@@ -29,22 +28,13 @@ class AuthLoading extends React.Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
-				<ActivityIndicator />
+			<View>
+				<Loading />
 				<StatusBar barStyle="default" />
 			</View>
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'green',
-	},
-});
 
 const mapStateToProps = state => ({
 	userData: state.user.userData,
