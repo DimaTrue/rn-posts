@@ -22,9 +22,12 @@ const Post = (props) => {
 const styles = StyleSheet.create({
   wrap: {
     flex: 1,
-    backgroundColor: '#333',
+    backgroundColor: '#eee',
     padding: 10,
     margin: 5,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#000',
   },
   block: {
     flex: 1,
@@ -41,11 +44,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 10,
-    color: '#fff'
+    //color: '#fff'
   },
   body: {
     backgroundColor: '#fff',
     borderRadius: 10,
+    // borderWidth: 0.5,
+    // borderColor: '#000',
     width: '100%',
   },
   textBody: {
